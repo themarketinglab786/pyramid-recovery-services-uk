@@ -199,10 +199,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <a href="#faq" class="hover:text-amber-500 transition">FAQ</a>
                 <a href="#contact" class="hover:text-amber-500 transition">Contact Us</a>
             </nav>
-            <a href="tel:+447367290408" class="call-red px-4 py-2 rounded-lg font-bold text-sm flex items-center gap-2">
+            <a href="tel:+447367290408" class="hidden md:flex call-red px-4 py-2 rounded-lg font-bold text-sm items-center gap-2">
                 <i class="fas fa-phone-alt"></i> Call Now: +44 7367 290408
             </a>
+            <button id="mobile-menu-toggle" type="button" class="md:hidden text-white p-2" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+                <i class="fas fa-bars text-xl" aria-hidden="true"></i>
+            </button>
         </div>
+        <nav id="mobile-menu" class="hidden md:hidden border-t border-slate-700 px-4 pb-4 pt-2" aria-label="Mobile navigation">
+            <a href="#home" class="block py-2 hover:text-amber-500 transition">Home</a>
+            <a href="#about" class="block py-2 hover:text-amber-500 transition">About Us</a>
+            <a href="#services" class="block py-2 hover:text-amber-500 transition">Services</a>
+            <a href="#areas" class="block py-2 hover:text-amber-500 transition">Service Areas</a>
+            <a href="#reviews" class="block py-2 hover:text-amber-500 transition">Reviews</a>
+            <a href="#faq" class="block py-2 hover:text-amber-500 transition">FAQ</a>
+            <a href="#contact" class="block py-2 hover:text-amber-500 transition">Contact Us</a>
+        </nav>
     </header>
 
     <!-- Hero Section -->
@@ -714,6 +726,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 item.classList.add('active');
             }
         }
+
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            const isOpen = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+            mobileMenuToggle.setAttribute('aria-expanded', String(!isOpen));
+            mobileMenuToggle.setAttribute('aria-label', isOpen ? 'Open menu' : 'Close menu');
+            mobileMenu.classList.toggle('hidden', isOpen);
+            mobileMenuToggle.querySelector('i').classList.toggle('fa-bars', isOpen);
+            mobileMenuToggle.querySelector('i').classList.toggle('fa-times', !isOpen);
+        });
+
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenuToggle.setAttribute('aria-expanded', 'false');
+                mobileMenuToggle.setAttribute('aria-label', 'Open menu');
+                mobileMenuToggle.querySelector('i').classList.add('fa-bars');
+                mobileMenuToggle.querySelector('i').classList.remove('fa-times');
+            });
+        });
     </script>
 
 </body>
